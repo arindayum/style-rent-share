@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ItemDetail } from "@/components/ItemDetail";
 import { RentalFlow } from "@/components/RentalFlow";
 import { UserProfile } from "@/components/UserProfile";
+import { MobileNav } from "@/components/MobileNav";
 
 // Mock data for demonstration
 const mockItem = {
@@ -79,25 +80,13 @@ const Index = () => {
   if (currentView === 'item-detail') {
     return (
       <div className="min-h-screen bg-background">
-        <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-primary-foreground" />
-                  </div>
-                  <span className="text-xl font-bold text-foreground">StyleShare</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Button variant="outline" onClick={handleBackToHome}>Back to Home</Button>
-                <Button onClick={handleViewProfile}>View Profile</Button>
-              </div>
-            </div>
-          </div>
-        </nav>
-        <div className="container mx-auto px-4 py-8">
+        <MobileNav
+          additionalLinks={[
+            { label: "Back to Home", onClick: handleBackToHome },
+            { label: "View Profile", onClick: handleViewProfile },
+          ]}
+        />
+        <div className="container mx-auto px-4 py-4 md:py-8">
           <ItemDetail
             item={mockItem}
             onBack={handleBackToHome}
@@ -126,25 +115,13 @@ const Index = () => {
   if (currentView === 'profile') {
     return (
       <div className="min-h-screen bg-background">
-        <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-primary-foreground" />
-                  </div>
-                  <span className="text-xl font-bold text-foreground">StyleShare</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Button variant="outline" onClick={handleBackToHome}>Back to Home</Button>
-                <Button onClick={() => setCurrentView('item-detail')}>View Item</Button>
-              </div>
-            </div>
-          </div>
-        </nav>
-        <div className="container mx-auto px-4 py-8">
+        <MobileNav
+          additionalLinks={[
+            { label: "Back to Home", onClick: handleBackToHome },
+            { label: "View Item", onClick: () => setCurrentView('item-detail') },
+          ]}
+        />
+        <div className="container mx-auto px-4 py-4 md:py-8">
           <UserProfile
             user={mockUser}
             isOwnProfile={false}
@@ -158,45 +135,15 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <span className="text-xl font-bold text-foreground">StyleShare</span>
-              </div>
-            </div>
-            <div className="hidden md:flex items-center space-x-6">
-              <Link to="/browse" className="text-muted-foreground hover:text-foreground transition-colors">
-                Browse
-              </Link>
-              <Link to="/closet" className="text-muted-foreground hover:text-foreground transition-colors">
-                My Closet
-              </Link>
-              <button 
-                onClick={handleViewItemDetail}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Demo Item
-              </button>
-              <button 
-                onClick={handleViewProfile}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Demo Profile
-              </button>
-              <Button variant="outline" size="sm">Sign In</Button>
-              <Button size="sm">Get Started</Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <MobileNav
+        additionalLinks={[
+          { label: "Demo Item", onClick: handleViewItemDetail },
+          { label: "Demo Profile", onClick: handleViewProfile },
+        ]}
+      />
 
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+      <section className="relative py-12 md:py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-4xl mx-auto">
@@ -233,7 +180,7 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-secondary/30">
+      <section className="py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -282,7 +229,7 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20">
+      <section className="py-12 md:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -331,7 +278,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-hero">
+      <section className="py-12 md:py-20 bg-gradient-hero">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
             Ready to Transform Your Wardrobe?

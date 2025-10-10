@@ -17,6 +17,7 @@ import {
   Layers
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MobileNav } from "@/components/MobileNav";
 
 const Browse = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'swipe'>('grid');
@@ -84,38 +85,31 @@ const Browse = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-                <Search className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-foreground">StyleShare</span>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Button
-                variant={viewMode === 'grid' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setViewMode('grid')}
-              >
-                <Grid3X3 className="w-4 h-4 mr-2" />
-                Grid
-              </Button>
-              <Button
-                variant={viewMode === 'swipe' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setViewMode('swipe')}
-              >
-                <Layers className="w-4 h-4 mr-2" />
-                Swipe
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <MobileNav />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* View Mode Toggle - Mobile */}
+      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur border-b border-border py-2">
+        <div className="container mx-auto px-4 flex items-center justify-center space-x-2">
+          <Button
+            variant={viewMode === 'grid' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setViewMode('grid')}
+          >
+            <Grid3X3 className="w-4 h-4 md:mr-2" />
+            <span className="hidden md:inline">Grid</span>
+          </Button>
+          <Button
+            variant={viewMode === 'swipe' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setViewMode('swipe')}
+          >
+            <Layers className="w-4 h-4 md:mr-2" />
+            <span className="hidden md:inline">Swipe</span>
+          </Button>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
         {/* Search and Filters */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -145,7 +139,7 @@ const Browse = () => {
 
         {/* Grid View */}
         {viewMode === 'grid' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {mockItems.map((item) => (
               <Card key={item.id} className="group cursor-pointer bg-gradient-card border-0 shadow-soft hover:shadow-medium transition-all duration-300 overflow-hidden">
                 <div className="relative">

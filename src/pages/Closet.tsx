@@ -21,6 +21,7 @@ import {
   List 
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MobileNav } from "@/components/MobileNav";
 
 const Closet = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -93,72 +94,67 @@ const Closet = () => {
   const avgRating = (mockItems.reduce((sum, item) => sum + item.rating, 0) / totalItems).toFixed(1);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="border-b bg-white sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                <Upload className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-800">My Closet</span>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Button variant={viewMode === 'grid' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('grid')} >
-                <Grid3X3 className="w-4 h-4" />
-              </Button>
-              <Button variant={viewMode === 'list' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('list')} >
-                <List className="w-4 h-4" />
-              </Button>
-              <Button>
-                <Plus className="w-4 h-4 mr-2" /> Add Item
-              </Button>
-            </div>
+    <div className="min-h-screen bg-background">
+      <MobileNav />
+
+      {/* View Mode Toggle and Add Button - Mobile Optimized */}
+      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur border-b border-border py-2">
+        <div className="container mx-auto px-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Button variant={viewMode === 'grid' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('grid')} >
+              <Grid3X3 className="w-4 h-4" />
+            </Button>
+            <Button variant={viewMode === 'list' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('list')} >
+              <List className="w-4 h-4" />
+            </Button>
           </div>
+          <Button size="sm">
+            <Plus className="w-4 h-4 md:mr-2" />
+            <span className="hidden md:inline">Add Item</span>
+          </Button>
         </div>
-      </nav>
+      </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="p-6 bg-white shadow rounded">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Items</p>
-                <p className="text-2xl font-bold text-gray-800">{totalItems}</p>
+                <p className="text-sm text-muted-foreground">Total Items</p>
+                <p className="text-2xl font-bold text-foreground">{totalItems}</p>
               </div>
-              <Upload className="w-6 h-6 text-blue-500" />
+              <Upload className="w-6 h-6 text-primary" />
             </div>
           </Card>
 
-          <Card className="p-6 bg-white shadow rounded">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Available</p>
-                <p className="text-2xl font-bold text-gray-800">{availableItems}</p>
+                <p className="text-sm text-muted-foreground">Available</p>
+                <p className="text-2xl font-bold text-foreground">{availableItems}</p>
               </div>
-              <Calendar className="w-6 h-6 text-green-500" />
+              <Calendar className="w-6 h-6 text-success" />
             </div>
           </Card>
 
-          <Card className="p-6 bg-white shadow rounded">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Earnings</p>
-                <p className="text-2xl font-bold text-gray-800">₹{totalEarnings}</p>
+                <p className="text-sm text-muted-foreground">Total Earnings</p>
+                <p className="text-2xl font-bold text-foreground">₹{totalEarnings}</p>
               </div>
-              <DollarSign className="w-6 h-6 text-yellow-500" />
+              <DollarSign className="w-6 h-6 text-gold" />
             </div>
           </Card>
 
-          <Card className="p-6 bg-white shadow rounded">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Avg Rating</p>
-                <p className="text-2xl font-bold text-gray-800">{avgRating}</p>
+                <p className="text-sm text-muted-foreground">Avg Rating</p>
+                <p className="text-2xl font-bold text-foreground">{avgRating}</p>
               </div>
-              <Star className="w-6 h-6 text-yellow-500" />
+              <Star className="w-6 h-6 text-gold" />
             </div>
           </Card>
         </div>
@@ -176,7 +172,7 @@ const Closet = () => {
 
         {/* Items Grid/List */}
         {viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {filteredItems.map(item => (
               <Card key={item.id} className="group bg-white shadow rounded overflow-hidden hover:shadow-lg transition">
                 <div className="relative">

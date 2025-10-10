@@ -2,6 +2,7 @@ import { useState } from "react";
 import { UserProfile } from "@/components/UserProfile";
 import { ReviewForm } from "@/components/ReviewForm";
 import { useToast } from "@/hooks/use-toast";
+import { MobileNav } from "@/components/MobileNav";
 
 // Mock user data
 const mockUser = {
@@ -47,7 +48,8 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
-      <div className="container mx-auto px-4 py-8">
+      <MobileNav />
+      <div className="container mx-auto px-4 py-4 md:py-8">
         {/* Profile Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent mb-2">

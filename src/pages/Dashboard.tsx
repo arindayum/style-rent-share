@@ -7,6 +7,7 @@ import { RentalStatus } from "@/components/RentalStatus";
 import { ReviewForm } from "@/components/ReviewForm";
 import { useToast } from "@/hooks/use-toast";
 import { addDays } from "date-fns";
+import { MobileNav } from "@/components/MobileNav";
 
 // Mock rental data
 const mockRentals = [
@@ -126,7 +127,8 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
-      <div className="container mx-auto px-4 py-8">
+      <MobileNav />
+      <div className="container mx-auto px-4 py-4 md:py-8">
         {/* Dashboard Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent mb-2">
@@ -136,9 +138,9 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
           <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
-            <CardContent className="p-6">
+            <CardContent className="p-3 md:p-6">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-green-100 rounded-full">
                   <DollarSign className="h-6 w-6 text-green-600" />
@@ -152,7 +154,7 @@ export default function Dashboard() {
           </Card>
 
           <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
-            <CardContent className="p-6">
+            <CardContent className="p-3 md:p-6">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-blue-100 rounded-full">
                   <Package className="h-6 w-6 text-blue-600" />
@@ -166,7 +168,7 @@ export default function Dashboard() {
           </Card>
 
           <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
-            <CardContent className="p-6">
+            <CardContent className="p-3 md:p-6">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-purple-100 rounded-full">
                   <TrendingUp className="h-6 w-6 text-purple-600" />
@@ -180,7 +182,7 @@ export default function Dashboard() {
           </Card>
 
           <Card className="border-border/20 bg-card/50 backdrop-blur-sm">
-            <CardContent className="p-6">
+            <CardContent className="p-3 md:p-6">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-amber-100 rounded-full">
                   <Star className="h-6 w-6 text-amber-600" />
