@@ -16,12 +16,12 @@ import {
   DollarSign, 
   Star, 
   Upload, 
+  Filter, 
   Grid3X3, 
   List 
 } from "lucide-react";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Link } from "react-router-dom";
-import { BottomNav } from "@/components/BottomNav";
+import { MobileNav } from "@/components/MobileNav";
 
 const Closet = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -94,35 +94,31 @@ const Closet = () => {
   const avgRating = (mockItems.reduce((sum, item) => sum + item.rating, 0) / totalItems).toFixed(1);
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border px-4 py-4 safe-top">
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">My Closet</h1>
-            <p className="text-sm text-muted-foreground">{totalItems} items</p>
+    <div className="min-h-screen bg-background">
+      <MobileNav />
+
+      {/* View Mode Toggle and Add Button - Mobile Optimized */}
+      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur border-b border-border py-2">
+        <div className="container mx-auto px-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Button variant={viewMode === 'grid' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('grid')} >
+              <Grid3X3 className="w-4 h-4" />
+            </Button>
+            <Button variant={viewMode === 'list' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('list')} >
+              <List className="w-4 h-4" />
+            </Button>
           </div>
           <Button size="sm">
-            <Plus className="w-4 h-4 mr-2" />
-            Add Item
-          </Button>
-        </div>
-
-        {/* View Mode Toggle */}
-        <div className="flex items-center space-x-2">
-          <Button variant={viewMode === 'grid' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('grid')}>
-            <Grid3X3 className="w-4 h-4" />
-          </Button>
-          <Button variant={viewMode === 'list' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('list')}>
-            <List className="w-4 h-4" />
+            <Plus className="w-4 h-4 md:mr-2" />
+            <span className="hidden md:inline">Add Item</span>
           </Button>
         </div>
       </div>
 
-      <div className="px-4 py-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <Card className="p-3 bg-card shadow-sm rounded-lg">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Total Items</p>
@@ -132,7 +128,7 @@ const Closet = () => {
             </div>
           </Card>
 
-          <Card className="p-3 bg-card shadow-sm rounded-lg">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Available</p>
@@ -142,7 +138,7 @@ const Closet = () => {
             </div>
           </Card>
 
-          <Card className="p-3 bg-card shadow-sm rounded-lg">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Total Earnings</p>
@@ -152,7 +148,7 @@ const Closet = () => {
             </div>
           </Card>
 
-          <Card className="p-3 bg-card shadow-sm rounded-lg">
+          <Card className="p-3 md:p-6 bg-card shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Avg Rating</p>
@@ -164,21 +160,19 @@ const Closet = () => {
         </div>
 
         {/* Filters */}
-        <div className="mb-4">
-          <ScrollArea className="w-full">
-            <div className="flex gap-2 pb-2">
-              <Badge variant={filter === 'all' ? 'default' : 'outline'} className="cursor-pointer whitespace-nowrap px-4 py-2 rounded-full" onClick={() => setFilter('all')}>All Items</Badge>
-              <Badge variant={filter === 'available' ? 'default' : 'outline'} className="cursor-pointer whitespace-nowrap px-4 py-2 rounded-full" onClick={() => setFilter('available')}>Available</Badge>
-              <Badge variant={filter === 'rented' ? 'default' : 'outline'} className="cursor-pointer whitespace-nowrap px-4 py-2 rounded-full" onClick={() => setFilter('rented')}>Rented</Badge>
-              <Badge variant={filter === 'unavailable' ? 'default' : 'outline'} className="cursor-pointer whitespace-nowrap px-4 py-2 rounded-full" onClick={() => setFilter('unavailable')}>Unavailable</Badge>
-            </div>
-            <ScrollBar orientation="horizontal" className="invisible" />
-          </ScrollArea>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div className="flex flex-wrap gap-2">
+            <Button variant={filter === 'all' ? 'default' : 'outline'} size="sm" onClick={() => setFilter('all')} >All Items</Button>
+            <Button variant={filter === 'available' ? 'default' : 'outline'} size="sm" onClick={() => setFilter('available')} >Available</Button>
+            <Button variant={filter === 'rented' ? 'default' : 'outline'} size="sm" onClick={() => setFilter('rented')} >Currently Rented</Button>
+            <Button variant={filter === 'unavailable' ? 'default' : 'outline'} size="sm" onClick={() => setFilter('unavailable')} >Unavailable</Button>
+          </div>
+          <Button variant="outline" size="sm"><Filter className="w-4 h-4 mr-2" /> More Filters</Button>
         </div>
 
         {/* Items Grid/List */}
         {viewMode === 'grid' ? (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {filteredItems.map(item => (
               <Card key={item.id} className="group bg-white shadow rounded overflow-hidden hover:shadow-lg transition">
                 <div className="relative">
@@ -234,7 +228,6 @@ const Closet = () => {
           </div>
         )}
       </div>
-      <BottomNav />
     </div>
   );
 };

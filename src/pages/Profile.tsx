@@ -2,7 +2,7 @@ import { useState } from "react";
 import { UserProfile } from "@/components/UserProfile";
 import { ReviewForm } from "@/components/ReviewForm";
 import { useToast } from "@/hooks/use-toast";
-import { BottomNav } from "@/components/BottomNav";
+import { MobileNav } from "@/components/MobileNav";
 
 // Mock user data
 const mockUser = {
@@ -47,12 +47,16 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border px-4 py-4 safe-top">
-        <h1 className="text-2xl font-bold text-foreground">Profile</h1>
-        <p className="text-sm text-muted-foreground">View your stats and reviews</p>
-      </div>
-      <div className="px-4 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
+      <MobileNav />
+      <div className="container mx-auto px-4 py-4 md:py-8">
+        {/* Profile Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent mb-2">
+            My Profile
+          </h1>
+          <p className="text-muted-foreground">Manage your account and view your rental history</p>
+        </div>
 
         <UserProfile
           user={mockUser}
@@ -82,7 +86,6 @@ export default function Profile() {
           )}
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 }
