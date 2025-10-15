@@ -6,9 +6,15 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Search, Heart, MapPin, Star } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
+import { ItemDetail } from "@/components/ItemDetail";
+import { RentalFlow } from "@/components/RentalFlow";
+import { UserProfile } from "@/components/UserProfile";
 
 const Explore = () => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [currentView, setCurrentView] = useState<'explore' | 'item-detail' | 'profile'>('explore');
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [showRentalFlow, setShowRentalFlow] = useState(false);
 
   const occasionFilters = [
     { id: "wedding", label: "💍 Wedding", emoji: "💍" },
@@ -52,6 +58,25 @@ const Explore = () => {
       reviews: 23,
       image: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQF58t0nuWMZGihWSI8DfS42Sb6TSKGokaBfzn1gqlTgRv-dXLopA666ja6bbpo_y8LMYM10CIEJwuOTlV5UHiUBsc3aLgeSOFV1JjRetNH",
       tags: ["Evening", "Formal"],
+      images: [
+        "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQF58t0nuWMZGihWSI8DfS42Sb6TSKGokaBfzn1gqlTgRv-dXLopA666ja6bbpo_y8LMYM10CIEJwuOTlV5UHiUBsc3aLgeSOFV1JjRetNH",
+        "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT4eVbjXr4s1IafFT7KpYssLQtqeFY7fG-gcYam5ML697njziAEzhwDYNAF39tW1xc0CWJmOB7XTg_MA0FOHLKWm26a1NFAE2CkgW9z200a2LHG4PAcvfjvzw"
+      ],
+      description: "Stunning designer evening gown perfect for formal events, galas, and special occasions.",
+      size: "M",
+      condition: "Excellent",
+      category: "Evening Wear",
+      ownerDetails: {
+        id: "owner-1",
+        name: "Sarah M.",
+        avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100",
+        rating: 4.9,
+        reviewCount: 23,
+        responseTime: "2 hours"
+      },
+      availability: "Available",
+      averageRating: 4.8,
+      totalReviews: 15
     },
     {
       id: 2,
@@ -95,6 +120,83 @@ const Explore = () => {
         : [...prev, filterId]
     );
   };
+
+  const handleItemClick = (item: any) => {
+    setSelectedItem(item);
+    setCurrentView('item-detail');
+  };
+
+  const handleRentItem = () => {
+    setShowRentalFlow(true);
+  };
+
+  const handleRentalSubmit = (request: any) => {
+    console.log('Rental request:', request);
+    setShowRentalFlow(false);
+    alert('Rental request sent successfully!');
+  };
+
+  const mockUser = {
+    id: "user-123",
+    name: "Sarah M.",
+    avatar: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100",
+    bio: "Fashion enthusiast and sustainable style advocate.",
+    location: "Manhattan, NY",
+    joinDate: "March 2023",
+    isVerified: true,
+    totalRentals: 47,
+    totalListings: 23,
+    averageRating: 4.9,
+    totalReviews: 32
+  };
+
+  if (currentView === 'item-detail' && selectedItem) {
+    return (
+      <div className="min-h-screen bg-background pb-20">
+        <ItemDetail
+          item={selectedItem}
+          onBack={() => setCurrentView('explore')}
+          onRent={handleRentItem}
+          onMessage={() => alert('Messaging feature coming soon!')}
+          onViewProfile={() => setCurrentView('profile')}
+        />
+        {showRentalFlow && (
+          <RentalFlow
+            item={{
+              id: selectedItem.id,
+              title: selectedItem.title,
+              price: selectedItem.price,
+              image: selectedItem.image,
+              owner: selectedItem.owner
+            }}
+            onClose={() => setShowRentalFlow(false)}
+            onSubmit={handleRentalSubmit}
+          />
+        )}
+        <BottomNav />
+      </div>
+    );
+  }
+
+  if (currentView === 'profile') {
+    return (
+      <div className="min-h-screen bg-background pb-20">
+        <UserProfile
+          user={mockUser}
+          isOwnProfile={false}
+          onSendMessage={() => alert('Messaging feature coming soon!')}
+        />
+        <Button 
+          onClick={() => setCurrentView('explore')} 
+          className="fixed top-4 left-4 z-50"
+          variant="secondary"
+        >
+          ← Back
+        </Button>
+        <BottomNav />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -188,6 +290,7 @@ const Explore = () => {
             <Card 
               key={item.id} 
               className="group cursor-pointer border-0 shadow-soft hover:shadow-medium transition-all duration-300 overflow-hidden"
+              onClick={() => handleItemClick(item)}
             >
               <div className="relative">
                 <div className="aspect-[3/4] bg-muted overflow-hidden">
